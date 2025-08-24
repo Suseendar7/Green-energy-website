@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Green Energy Awareness</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="background-blur"></div>
+
+ 
+  <nav>
+    <ul>
+      <li><a href="#intro">Intro</a></li>
+      <li><a href="#calculator">Calculator</a></li>
+      <li><a href="#tips">Tips</a></li>
+      <li><a href="#facts">Facts</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#quickQSection">Quick Qs</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <marquee>Green Energy Awareness</marquee>
+  </header>
+
+
+  <section id="intro" class="intro">
+    <h2>Why Green Energy?</h2>
+    <p>
+      Green energy is more than just an alternative – it is the key to a sustainable future.  
+      By using renewable resources like solar, wind, hydro, and biomass, we can reduce dependency on fossil fuels,  
+      cut harmful emissions, and build a cleaner, healthier environment for generations to come.
+    </p>
+
+    <div class="benefits">
+      <h3>Benefits of Green Energy</h3>
+      <ul>
+        <li>Reduces air and water pollution</li>
+        <li>Lowers electricity costs in the long run</li>
+        <li>Creates new jobs in clean energy industries</li>
+        <li>Helps fight climate change by reducing CO₂ emissions</li>
+        <li>Ensures sustainable energy for the future</li>
+      </ul>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat"><b>40%</b><br>More Efficient</div>
+      <div class="stat"><b>80%</b><br>Less Emissions</div>
+      <div class="stat"><b>100%</b><br>Renewable Future</div>
+    </div>
+  </section>
+
+  
+  <div class="content-wrapper">
+
+
+    <div class="left-content">
+   
+      <section id="calculator">
+        <h1 align="center">Energy Calculator</h1>
+        <h3>You Can calculate:</h3>
+        <h4>-> Daily Usage<br>-> Monthy Cost<br>-> C02 Emmision</h4>
+        <label for="appliance">Choose Appliance:</label><br />
+        <select id="appliance">
+          <option value="75">Fan (75W)</option>
+          <option value="15">LED Bulb (15W)</option>
+          <option value="100">TV (100W)</option>
+          <option value="1500">Air Conditioner (1500W)</option>
+        </select><br />
+        <input type="number" id="hours" placeholder="Hours used per day" /><br />
+        <button class="calc-btn" onclick="calculateEnergy()">Calculate</button>
+        <p class="result" id="energyResult"></p>
+        <div class="progress-bar"><div id="energyBar"></div></div>
+      </section>
+
+   
+      <section id="tips">
+        <h1 align="center">Daily Green Tip</h1>
+        <p id="tipText">Click below to get today’s tip!</p>
+        <button onclick="showDailyTip()"><b>Get Today’s Tip</b></button>
+        <button onclick="markAsDone()"><b>Followed This</b></button>
+        <p class="points" id="pointsDisplay">Green Points: 0</p>
+        <h3>My Eco Habits</h3>
+        <ul id="savedHabits"></ul>
+      </section>
+
+    
+      <section id="facts">
+        <h2>Local Green Facts</h2>
+        <div class="carousel">
+          <div class="carousel-inner" id="factSlider">
+            <div class="fact">Tamil Nadu is India’s leader in wind energy production.</div>
+            <div class="fact">India aims to achieve Net Zero emissions by 2070.</div>
+            <div class="fact">Replacing 1 bulb with LED saves ₹200/year in electricity bills.</div>
+            <div class="fact">Using a fan instead of AC can reduce power use by 80%.</div>
+            <div class="fact">Solar rooftops can save up to ₹20,000 annually.</div>
+            <div class="fact">Switching to bicycles reduces 300kg of CO₂ per year per person.</div>
+          </div>
+          <button class="prev" onclick="moveFact(-1)">❮</button>
+          <button class="next" onclick="moveFact(1)">❯</button>
+        </div>
+      </section>
+    </div>
+
+    
+    <div class="sidebar">
+  
+      <section id="quiz" class="quiz-section">
+        <h1 align="center">Green Energy Quiz</h1>
+        <p id="timer">Click Start to Begin</p>
+        <button id="startBtn" onclick="startQuiz()">Start Quiz</button>
+        <p id="quizQuestion"></p>
+        <div id="quizOptions"></div>
+        <button id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
+        <p class="quiz-result" id="quizResult"></p>
+      </section>
+
+    
+      <section id="quickQSection">
+        <h2>Quick Questions</h2>
+        <p id="quickQ"></p>
+        <button onclick="answerQuick(true)">Yes</button>
+        <button onclick="answerQuick(false)">No</button>
+        <p id="creditDisplay">Total Credits: 0</p>
+      </section>
+    </div>
+  </div>
+
+
+  <footer>
+    <div class="quote">
+      "Small changes today create a greener tomorrow."
+    </div>
+    <hr>
+    <div class="resources">
+      <p><b>Useful Resource Links:</b></p>
+      <p>
+        <a href="https://mnre.gov.in" target="_blank">Govt. Renewable Energy</a> | 
+        <a href="https://www.un.org/sustainabledevelopment/energy/" target="_blank">UN SDG Energy</a> | 
+        <a href="https://www.iea.org/topics/renewables" target="_blank">IEA Renewables</a>
+      </p>
+    </div>
+  </footer>
+
+ 
+  <script>
+    function calculateEnergy() {
+      const watts = Number(document.getElementById("appliance").value);
+      const hours = Number(document.getElementById("hours").value) || 0;
+
+      const dailyKWh = (watts * hours) / 1000;
+      const monthlyKWh = dailyKWh * 30;
+      const cost = monthlyKWh * 8;
+      const co2 = dailyKWh * 0.82;
+
+      document.getElementById("energyResult").innerText =
+        `Daily Usage: ${dailyKWh.toFixed(2)} kWh | Monthly Cost: ₹${cost.toFixed(2)} | CO₂ Emission: ${co2.toFixed(2)} kg/day`;
+
+      const percent = Math.min((dailyKWh / 10) * 100, 100);
+      document.getElementById("energyBar").style.width = percent + "%";
+    }
+
+    const tips = [
+      "Turn off lights when leaving a room.",
+      "Use a bucket instead of a shower to save water.",
+      "Use public transport or carpool.",
+      "Plant at least one tree every year.",
+      "Switch off appliances fully, don’t keep them on standby.",
+      "Unplug chargers when not in use.",
+      "Use natural light in daytime.",
+      "Compost kitchen waste for fertilizer."
+    ];
+    let points = 0, currentTip = -1;
+
+    function showDailyTip() {
+      if (currentTip < tips.length - 1) {
+        currentTip++;
+        document.getElementById("tipText").innerText = tips[currentTip];
+      } else {
+        document.getElementById("tipText").innerText = "You have completed all tips 🎉";
+      }
+    }
+
+    function markAsDone() {
+      if (currentTip === -1) { alert("Please get today's tip first!"); return; }
+      points++;
+      document.getElementById("pointsDisplay").innerText = "Green Points: " + points;
+      const li = document.createElement("li");
+      li.innerText = tips[currentTip];
+      document.getElementById("savedHabits").appendChild(li);
+    }
+
+    let factIndex = 0;
+    function moveFact(step) {
+      const slider = document.getElementById("factSlider");
+      const totalFacts = slider.children.length;
+      factIndex = (factIndex + step + totalFacts) % totalFacts;
+      slider.style.transform = "translateX(" + (-factIndex * 100) + "%)";
+    }
+
+    const quickQuestions = [
+      "Did you switch off lights when not in use?",
+      "Did you use public transport today?",
+      "Did you avoid plastic bottles?",
+      "Did you plant a tree this year?",
+      "Did you unplug unused chargers?",
+      "Did you use natural sunlight today?",
+      "Did you recycle waste properly?"
+    ];
+    let quickIndex = 0, credits = 0;
+    document.getElementById("quickQ").innerText = quickQuestions[0];
+
+    function answerQuick(ans) {
+      if (quickIndex < quickQuestions.length) {
+        if (ans) credits++;
+        quickIndex++;
+        if (quickIndex < quickQuestions.length) {
+          document.getElementById("quickQ").innerText = quickQuestions[quickIndex];
+          document.getElementById("creditDisplay").innerText = "Total Credits: " + credits;
+        } else {
+          document.getElementById("quickQ").innerText =
+            `✔ You finished all quick questions! You earned ${credits} Green Credits`;
+          document.getElementById("creditDisplay").innerText = "";
+        }
+      }
+    }
+
+    
+const quizData = [
+  { q: "Which is a renewable energy source?", options: ["Coal", "Solar", "Petrol"], ans: "Solar" },
+  { q: "Which bulb saves the most energy?", options: ["LED", "CFL", "Tube Light"], ans: "LED" },
+  { q: "Which transport is eco-friendly?", options: ["Car", "Bus", "Bicycle"], ans: "Bicycle" },
+  { q: "What gas do trees absorb from the atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen"], ans: "Carbon Dioxide" },
+  { q: "Which renewable source works best on rooftops?", options: ["Wind", "Solar", "Coal"], ans: "Solar" }
+];
+
+    let currentQ = 0, score = 0, timer = null;
+
+    function startQuiz() {
+      currentQ = 0; score = 0;
+      document.getElementById("quizResult").innerText = "";
+      document.getElementById("quizOptions").innerHTML = "";
+      document.getElementById("timer").innerText = "Time left: 15s";
+      document.getElementById("nextBtn").disabled = false;
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      if (timer) { clearInterval(timer); timer = null; }
+
+      if (currentQ < quizData.length) {
+        document.getElementById("quizQuestion").innerText = quizData[currentQ].q;
+
+        let opts = "";
+        quizData[currentQ].options.forEach(opt => {
+          opts += `<button class="quiz-btn" onclick="checkAnswer('${opt}', this)">${opt}</button><br>`;
+        });
+        document.getElementById("quizOptions").innerHTML = opts;
+
+        startTimer();
+      } else {
+        document.getElementById("quizQuestion").innerText = "";
+        document.getElementById("quizOptions").innerHTML = "";
+        document.getElementById("timer").innerText = "Finished";
+        document.getElementById("nextBtn").disabled = true;
+        document.getElementById("quizResult").innerText = `🎉 Your Score: ${score}/${quizData.length}`;
+      }
+    }
+
+    function checkAnswer(answer, btnEl) {
+      if (answer === quizData[currentQ].ans) { 
+        score++; 
+        btnEl.style.background = "green";
+      } else {
+        btnEl.style.background = "red";
+      }
+      if (timer) { clearInterval(timer); timer = null; }
+      setTimeout(nextQuestion, 800);
+    }
+
+    function nextQuestion() {
+      currentQ++;
+      loadQuestion();
+    }
+
+    function startTimer() {
+      let time = 15;
+      document.getElementById("timer").innerText = "Time left: " + time + "s";
+      timer = setInterval(() => {
+        time--;
+        document.getElementById("timer").innerText = "Time left: " + time + "s";
+        if (time <= 0) {
+          clearInterval(timer);
+          timer = null;
+          nextQuestion();
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
